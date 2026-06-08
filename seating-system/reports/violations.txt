@@ -1,0 +1,8 @@
+VALIDATION REPORT
+Generated : 2026-06-08 10:41:53
+--------------------------------------------------
+
+Warnings:
+  WARNING | Empty seat ratio 50.0% exceeds 20%. Consider using fewer or smaller halls.
+
+FAIL

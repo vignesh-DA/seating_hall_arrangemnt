@@ -1,0 +1,21 @@
+===== SUMMARY =====
+
+Total Students   : 10
+Total Capacity   : 20
+
+Students Seated  : 10
+
+Violations Found : 0
+
+Halls Used       : 1
+
+Capacity Used    : 50.0%
+
+STATUS           : SUCCESS
+
+==================================================
+
+HALL-WISE BREAKDOWN
+--------------------------------------------------
+Hall-A : 10/12 seats used (83.3%)
+Hall-B : 0/8 seats used (0.0%)

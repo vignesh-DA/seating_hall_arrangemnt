@@ -1,0 +1,11 @@
+com\exam\seating\model\Student.class
+com\exam\seating\SeatingApplication.class
+com\exam\seating\model\Hall.class
+com\exam\seating\service\CSVWriterService.class
+com\exam\seating\service\SeatingEngineService.class
+com\exam\seating\service\ConflictValidatorService.class
+com\exam\seating\controller\MainController.class
+com\exam\seating\model\Violation.class
+com\exam\seating\service\ReportService.class
+com\exam\seating\model\SeatingResult.class
+com\exam\seating\service\CSVReaderService.class
