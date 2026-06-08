@@ -1,0 +1,69 @@
+# ============================================================
+# Automated Examination Hall Seating Arrangement System
+# .gitignore — Java / Spring Boot / Maven / IntelliJ / VS Code
+# ============================================================
+
+# ---- Maven build output ----
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# ---- Generated report files (user output, not source) ----
+reports/
+seating-system
+
+# ---- IntelliJ IDEA ----
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ---- VS Code ----
+.vscode/
+*.code-workspace
+
+# ---- Eclipse / STS ----
+.classpath
+.project
+.settings/
+bin/
+
+# ---- NetBeans ----
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nb-configuration.xml
+
+# ---- macOS ----
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ---- Windows ----
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ---- Logs ----
+*.log
+logs/
+spring.log
+
+# ---- Environment / Secrets ----
+.env
+*.env
+application-local.properties
+application-secret.properties
+
+# ---- Maven wrapper (keep mvnw if you add it) ----
+# !.mvn/wrapper/maven-wrapper.jar
+
+# ---- Package lock (not used, but safety) ----
+package-lock.json
+node_modules/
