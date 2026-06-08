@@ -81,41 +81,43 @@ public class MainController {
     // ==================================================================
     @PostMapping("/upload")
     public String handleUpload(
-            @RequestParam("hallsFile")  MultipartFile hallsFile,
-            @RequestParam("classAFile") MultipartFile classAFile,
-            @RequestParam("classBFile") MultipartFile classBFile,
-            @RequestParam("classCFile") MultipartFile classCFile,
+            @RequestParam("hallsFile")   MultipartFile hallsFile,
+            @RequestParam("classFiles")  List<MultipartFile> classFiles,
             HttpSession session,
             RedirectAttributes ra) {
 
         List<String> errors   = new ArrayList<>();
         List<String> messages = new ArrayList<>();
 
+        // Parse halls
         ArrayList<Hall> halls = csvReaderService.parseHalls(hallsFile, errors);
         if (!halls.isEmpty())
             messages.add("✓ Halls parsed: " + halls.size() + " hall(s)");
 
+        // Parse all class files (1–20), skip empty uploads
         ArrayList<Student> all = new ArrayList<>();
+        int fileCount = 0;
 
-        ArrayList<Student> a = csvReaderService.parseStudents(classAFile, errors);
-        all.addAll(a);
-        if (!a.isEmpty()) messages.add("✓ " + classAFile.getOriginalFilename() + ": " + a.size() + " student(s)");
-
-        ArrayList<Student> b = csvReaderService.parseStudents(classBFile, errors);
-        all.addAll(b);
-        if (!b.isEmpty()) messages.add("✓ " + classBFile.getOriginalFilename() + ": " + b.size() + " student(s)");
-
-        ArrayList<Student> c = csvReaderService.parseStudents(classCFile, errors);
-        all.addAll(c);
-        if (!c.isEmpty()) messages.add("✓ " + classCFile.getOriginalFilename() + ": " + c.size() + " student(s)");
+        for (MultipartFile classFile : classFiles) {
+            if (classFile == null || classFile.isEmpty()) continue;
+            if (fileCount >= 20) {
+                errors.add("Maximum 20 class files allowed. Extra files were ignored.");
+                break;
+            }
+            ArrayList<Student> parsed = csvReaderService.parseStudents(classFile, errors);
+            all.addAll(parsed);
+            if (!parsed.isEmpty())
+                messages.add("✓ " + classFile.getOriginalFilename() + ": " + parsed.size() + " student(s)");
+            fileCount++;
+        }
 
         if (!all.isEmpty() && !halls.isEmpty()) {
             session.setAttribute(S_STUDENTS, all);
             session.setAttribute(S_HALLS,    halls);
             session.removeAttribute(S_RESULT);
-            messages.add("✓ Total students loaded: " + all.size());
+            messages.add("✓ Total: " + all.size() + " students from " + fileCount + " class file(s)");
         } else {
-            errors.add("Upload incomplete — need at least one hall and one student file.");
+            errors.add("Upload incomplete — need at least one hall and one class file.");
         }
 
         ra.addFlashAttribute("uploadMessages", messages);
