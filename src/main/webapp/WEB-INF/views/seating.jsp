@@ -177,7 +177,7 @@
                                                 java.util.Map<String, com.exam.seating.model.Student[][]> grids = res.getHallGrids();
 
                                                 // Get current hall name from loop (set by JSTL)
-                                                String currentHall = (String) pageContext.getAttribute("hall") != null
+                                                String currentHall = pageContext.getAttribute("hall") != null
                                                     ? ((com.exam.seating.model.Hall) pageContext.getAttribute("hall")).getHallName()
                                                     : "";
 

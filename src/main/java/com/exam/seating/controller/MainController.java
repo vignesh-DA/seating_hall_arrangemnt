@@ -6,7 +6,7 @@ import com.exam.seating.model.Student;
 import com.exam.seating.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.PathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -116,13 +116,15 @@ public class MainController {
             session.setAttribute(S_HALLS,    halls);
             session.removeAttribute(S_RESULT);
             messages.add("✓ Total: " + all.size() + " students from " + fileCount + " class file(s)");
+            ra.addFlashAttribute("uploadMessages", messages);
+            ra.addFlashAttribute("uploadErrors",   errors);
+            return "redirect:/generate";
         } else {
             errors.add("Upload incomplete — need at least one hall and one class file.");
+            ra.addFlashAttribute("uploadMessages", messages);
+            ra.addFlashAttribute("uploadErrors",   errors);
+            return "redirect:/upload";
         }
-
-        ra.addFlashAttribute("uploadMessages", messages);
-        ra.addFlashAttribute("uploadErrors",   errors);
-        return "redirect:/upload";
     }
 
     // ==================================================================
@@ -235,7 +237,7 @@ public class MainController {
 
         String fileName = hall.replace(" ", "_") + "_seating.csv";
         Path filePath   = csvWriterService.getReportPath(fileName);
-        Resource res    = new PathResource(filePath);
+        Resource res    = new FileSystemResource(filePath);
 
         if (!res.exists()) return ResponseEntity.notFound().build();
 
@@ -297,7 +299,7 @@ public class MainController {
     @GetMapping("/download/violations")
     public ResponseEntity<Resource> downloadViolations() throws IOException {
         Path filePath = csvWriterService.getReportPath("violations.txt");
-        Resource res  = new PathResource(filePath);
+        Resource res  = new FileSystemResource(filePath);
         if (!res.exists()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"violations.txt\"")
@@ -311,7 +313,7 @@ public class MainController {
     @GetMapping("/download/summary")
     public ResponseEntity<Resource> downloadSummary() throws IOException {
         Path filePath = csvWriterService.getReportPath("summary.txt");
-        Resource res  = new PathResource(filePath);
+        Resource res  = new FileSystemResource(filePath);
         if (!res.exists()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"summary.txt\"")

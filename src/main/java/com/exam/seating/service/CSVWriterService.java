@@ -147,7 +147,11 @@ public class CSVWriterService {
                     bw.newLine();
                 }
 
-                bw.write("FAIL");
+                if (conflicts > 0 || overflow > 0) {
+                    bw.write("FAIL");
+                } else {
+                    bw.write("PASS");
+                }
                 bw.newLine();
             }
         }

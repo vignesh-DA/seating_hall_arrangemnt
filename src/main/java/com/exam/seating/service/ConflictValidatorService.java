@@ -84,6 +84,9 @@ public class ConflictValidatorService {
 
         result.setViolations(violationMessages);
         result.setViolationObjects(violationObjects);
-        result.setValidationStatus(violationMessages.isEmpty() ? "PASS" : "FAIL");
+        // Only set status to FAIL if there are actual conflicts or overflows (not just warnings)
+        boolean hasFailures = violationObjects.stream()
+                .anyMatch(v -> v.getDescription().startsWith("CONFLICT") || v.getDescription().startsWith("OVERFLOW"));
+        result.setValidationStatus(hasFailures ? "FAIL" : "PASS");
     }
 }

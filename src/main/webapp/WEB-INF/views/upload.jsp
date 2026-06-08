@@ -13,59 +13,192 @@
         .upload-zone {
             border: 2px dashed var(--border);
             border-radius: var(--radius);
-            padding: 1.25rem;
-            background: var(--bg-card);
-            transition: border-color .2s, background .2s;
+            background: var(--surface);
+            transition: all var(--transition);
+            position: relative;
         }
-        .upload-zone:hover { border-color: var(--primary); background: var(--primary-light); }
-        .upload-zone label { font-weight: 600; font-size: .88rem; color: var(--text); display:block; margin-bottom:.4rem; }
-        .upload-zone input[type=file] { width:100%; font-size:.82rem; }
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .upload-zone.has-file {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+        .upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        .uz-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1.5rem;
+            cursor: pointer;
+            text-align: center;
+            z-index: 1;
+        }
+        .uz-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            transition: transform 0.2s;
+        }
+        .upload-zone:hover .uz-icon {
+            transform: scale(1.1);
+        }
+        .uz-text {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        .uz-browse {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .uz-file-info {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .upload-zone.has-file .uz-file-info {
+            color: var(--success);
+            font-weight: 600;
+        }
 
         .class-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: .75rem;
-            margin-bottom: .75rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.25rem;
         }
         .class-card {
-            border: 1.5px dashed var(--border);
-            border-radius: var(--radius-sm);
-            padding: .9rem;
-            background: var(--bg-card);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
             position: relative;
-            transition: border-color .2s;
+            transition: all var(--transition);
         }
-        .class-card:hover { border-color: var(--primary); }
-        .class-card label {
-            font-weight: 700; font-size: .8rem;
-            color: var(--primary); display:block; margin-bottom:.4rem;
+        .class-card:hover, .class-card.dragover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
         }
-        .class-card input[type=file] { width:100%; font-size:.78rem; }
+        .class-card.has-file {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+        .class-card input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        .cc-label {
+            display: flex;
+            flex-direction: column;
+            padding: 1.25rem;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .cc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .cc-title {
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: var(--text-mid);
+        }
+        .class-card.has-file .cc-title {
+            color: var(--success);
+        }
+        .cc-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .cc-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .cc-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        .class-card.has-file .cc-text {
+            color: var(--success);
+        }
+        .cc-file-info {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            word-break: break-all;
+        }
+        .class-card.has-file .cc-file-info {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
         .rm-btn {
-            position: absolute; top:7px; right:7px;
-            background:#fee2e2; border:none; border-radius:50%;
-            width:20px; height:20px; line-height:20px; text-align:center;
-            cursor:pointer; font-size:.72rem; color:#dc2626;
-            display:none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #fee2e2;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: #dc2626;
+            z-index: 10;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
         }
-        .class-card:hover .rm-btn { display:block; }
+        .class-card:hover .rm-btn {
+            display: flex;
+        }
+        .rm-btn:hover {
+            background: #fca5a5;
+            transform: scale(1.1);
+        }
 
         .add-btn {
-            border: 2px dashed #94a3b8; border-radius: var(--radius-sm);
-            background: transparent; width:100%; padding:.85rem;
-            color: var(--text-mid); cursor:pointer; font-size:.85rem; font-weight:600;
-            display:flex; align-items:center; justify-content:center; gap:8px;
-            transition: border-color .2s, color .2s, background .2s;
+            border: 2px dashed #94a3b8; border-radius: var(--radius);
+            background: transparent; width: 100%; padding: 1rem;
+            color: var(--text-mid); cursor: pointer; font-size: .875rem; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all var(--transition);
         }
         .add-btn:hover {
-            border-color: var(--primary); color:var(--primary);
-            background:var(--primary-light);
+            border-color: var(--primary); color: var(--primary);
+            background: var(--primary-light);
         }
-        .add-btn:disabled { opacity:.4; cursor:not-allowed; }
+        .add-btn:disabled { opacity: .4; cursor: not-allowed; }
         .counter-badge {
-            display:inline-block; background:var(--primary);
-            color:#fff; border-radius:20px; padding:2px 10px;
-            font-size:.75rem; font-weight:700;
+            display: inline-block; background: var(--primary);
+            color: #fff; border-radius: 20px; padding: 2px 10px;
+            font-size: .75rem; font-weight: 700;
         }
     </style>
 </head>
@@ -103,7 +236,7 @@
             <p>Upload halls config + <strong>1 to 20 class files</strong>. Each class CSV adds students to the seating pool.</p>
         </div>
 
-        <%-- Success --%>
+        <%-- Success (Unused since we redirect to generate directly now, but kept for fallback) --%>
         <c:if test="${not empty uploadMessages}">
             <div class="alert alert-success fade-in">
                 <span>✅</span>
@@ -112,10 +245,6 @@
                     <c:forEach var="msg" items="${uploadMessages}">
                         <div>${msg}</div>
                     </c:forEach>
-                    <div style="margin-top:.5rem;">
-                        <a href="${pageContext.request.contextPath}/generate"
-                           style="color:var(--primary);font-weight:700;">→ Go to Generate Seating</a>
-                    </div>
                 </div>
             </div>
         </c:if>
@@ -151,9 +280,13 @@
             <%-- Hall file --%>
             <div class="card fade-in" style="margin-bottom:1.25rem;">
                 <h3 style="font-size:1rem;font-weight:700;margin-bottom:.9rem;">🏛️ Hall Configuration</h3>
-                <div class="upload-zone">
-                    <label for="hallsFile">halls.csv <span style="color:#dc2626">*</span></label>
-                    <input type="file" id="hallsFile" name="hallsFile" accept=".csv" required>
+                <div class="upload-zone" id="uz-halls">
+                    <input type="file" id="hallsFile" name="hallsFile" accept=".csv" required onchange="handleFileChange(this, 'uz-halls')">
+                    <label for="hallsFile" class="uz-label">
+                        <div class="uz-icon">📁</div>
+                        <div class="uz-text">Drag &amp; drop <strong>halls.csv</strong> here, or <span class="uz-browse">browse</span></div>
+                        <div class="uz-file-info" id="uz-halls-info">No file chosen</div>
+                    </label>
                 </div>
                 <div style="font-size:.72rem;color:var(--text-light);margin-top:.35rem;">
                     Example: <code>Hall-A,5,10</code>
@@ -172,8 +305,17 @@
 
                 <div id="classGrid" class="class-grid">
                     <div class="class-card" id="cc-0">
-                        <label for="cf-0">Class 1 <span style="color:#dc2626">*</span></label>
-                        <input type="file" id="cf-0" name="classFiles" accept=".csv" required>
+                        <input type="file" id="cf-0" name="classFiles" accept=".csv" required onchange="handleFileChange(this, 'cc-0')">
+                        <label for="cf-0" class="cc-label">
+                            <div class="cc-header">
+                                <span class="cc-title" id="cc-title-0">Class 1 <span style="color:#dc2626">*</span></span>
+                            </div>
+                            <div class="cc-body">
+                                <div class="cc-icon">📄</div>
+                                <div class="cc-text" id="cc-text-0">Choose CSV</div>
+                                <div class="cc-file-info" id="cc-info-0">No file chosen</div>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
@@ -229,7 +371,40 @@
 <script>
     const MAX = 20;
     let count = 1;
-    let uid   = 1; // unique id counter so removed cards leave no gaps in IDs
+    let uid   = 1; // unique id counter
+
+    function handleFileChange(input, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            container.classList.add('has-file');
+            
+            // Check if it's halls zone or class card
+            if (containerId === 'uz-halls') {
+                document.getElementById('uz-halls-info').textContent = '✓ ' + file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+            } else {
+                // Find matching details elements
+                const indexSuffix = containerId.replace('cc-', '');
+                const textEl = document.getElementById('cc-text-' + indexSuffix);
+                const infoEl = document.getElementById('cc-info-' + indexSuffix);
+                if (textEl) textEl.textContent = 'File Selected';
+                if (infoEl) infoEl.textContent = '✓ ' + file.name;
+            }
+        } else {
+            container.classList.remove('has-file');
+            if (containerId === 'uz-halls') {
+                document.getElementById('uz-halls-info').textContent = 'No file chosen';
+            } else {
+                const indexSuffix = containerId.replace('cc-', '');
+                const textEl = document.getElementById('cc-text-' + indexSuffix);
+                const infoEl = document.getElementById('cc-info-' + indexSuffix);
+                if (textEl) textEl.textContent = 'Choose CSV';
+                if (infoEl) infoEl.textContent = 'No file chosen';
+            }
+        }
+    }
 
     function addCard() {
         if (count >= MAX) return;
@@ -241,8 +416,17 @@
         div.id = 'cc-' + uid;
         div.innerHTML =
             '<button type="button" class="rm-btn" onclick="removeCard(\'' + uid + '\')" title="Remove">✕</button>' +
-            '<label for="cf-' + uid + '">Class ' + count + '</label>' +
-            '<input type="file" id="cf-' + uid + '" name="classFiles" accept=".csv">';
+            '<input type="file" id="cf-' + uid + '" name="classFiles" accept=".csv" onchange="handleFileChange(this, \'cc-' + uid + '\')">' +
+            '<label for="cf-' + uid + '" class="cc-label">' +
+            '    <div class="cc-header">' +
+            '        <span class="cc-title" id="cc-title-' + uid + '">Class ' + count + '</span>' +
+            '    </div>' +
+            '    <div class="cc-body">' +
+            '        <div class="cc-icon">📄</div>' +
+            '        <div class="cc-text" id="cc-text-' + uid + '">Choose CSV</div>' +
+            '        <div class="cc-file-info" id="cc-info-' + uid + '">No file chosen</div>' +
+            '    </div>' +
+            '</label>';
         grid.appendChild(div);
         refresh();
     }
@@ -252,8 +436,8 @@
         if (el) { el.remove(); count--; }
         // Re-number labels
         document.querySelectorAll('.class-card').forEach((c, i) => {
-            const lbl = c.querySelector('label');
-            if (lbl) lbl.firstChild.textContent = 'Class ' + (i + 1) + (i === 0 ? ' * ' : ' ');
+            const titleSpan = c.querySelector('.cc-title');
+            if (titleSpan) titleSpan.textContent = 'Class ' + (i + 1) + (i === 0 ? ' *' : '');
         });
         refresh();
     }
@@ -265,6 +449,30 @@
         btn.disabled      = count >= MAX;
         btn.style.opacity = count >= MAX ? '0.4' : '1';
     }
+
+    // Drag and Drop listeners
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        document.addEventListener(eventName, e => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
+
+    function setupDragAndDrop(containerId) {
+        const zone = document.getElementById(containerId);
+        if (!zone) return;
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            zone.addEventListener(eventName, () => zone.classList.add('dragover'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            zone.addEventListener(eventName, () => zone.classList.remove('dragover'), false);
+        });
+    }
+
+    setupDragAndDrop('uz-halls');
+    setupDragAndDrop('cc-0');
 </script>
 </body>
 </html>
